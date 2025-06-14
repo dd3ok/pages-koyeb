@@ -1,0 +1,86 @@
+### Home Contact API 테스트
+
+### 1. 문의 등록 - POST
+POST http://localhost:8080/api/home/contacts
+Content-Type: application/json
+
+{
+  "name": "김개발",
+  "email": "kim@example.com",
+  "message": "안녕하세요! 협업 관련해서 문의드리고 싶습니다. 백엔드 개발 프로젝트에 참여하고 싶어요."
+}
+
+### 2. 문의 목록 조회 - GET
+GET http://localhost:8080/api/home/contacts
+Accept: application/json
+
+### 3. 문의 목록 조회 - GET (페이징)
+GET http://localhost:8080/api/home/contacts?page=0&size=3
+Accept: application/json
+
+### 4. 문의 단건 조회 - GET
+GET http://localhost:8080/api/home/contacts/1
+Accept: application/json
+
+### 5. 이메일로 문의 검색 - GET
+GET http://localhost:8080/api/home/contacts/email/kim@example.com
+Accept: application/json
+
+### 6. 문의 삭제 - DELETE
+DELETE http://localhost:8080/api/home/contacts/1
+
+### 7. 여러 문의 등록 (테스트 데이터)
+POST http://localhost:8080/api/home/contacts
+Content-Type: application/json
+
+{
+  "name": "박프론트",
+  "email": "park@frontend.com",
+  "message": "프론트엔드 개발자입니다. React 프로젝트 협업 가능한지 문의드려요."
+}
+
+###
+POST http://localhost:8080/api/home/contacts
+Content-Type: application/json
+
+{
+  "name": "이풀스택",
+  "email": "lee@fullstack.dev",
+  "message": "풀스택 개발 프로젝트에 관심이 있습니다. MLOps 스터디도 참여하고 싶어요!"
+}
+
+###
+POST http://localhost:8080/api/home/contacts
+Content-Type: application/json
+
+{
+  "name": "최데브옵스",
+  "email": "choi@devops.io",
+  "message": "DevOps 엔지니어입니다. 분산 시스템 관련 프로젝트 협업 문의드립니다."
+}
+
+### 8. 잘못된 이메일 형식으로 등록 시도 (에러 테스트)
+POST http://localhost:8080/api/home/contacts
+Content-Type: application/json
+
+{
+  "name": "테스트",
+  "email": "invalid-email",
+  "message": "잘못된 이메일 테스트"
+}
+
+### 9. 빈 이름으로 등록 시도 (에러 테스트)
+POST http://localhost:8080/api/home/contacts
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "test@example.com",
+  "message": "빈 이름 테스트"
+}
+
+### 10. 존재하지 않는 ID 조회 (에러 테스트)
+GET http://localhost:8080/api/home/contacts/999
+Accept: application/json
+
+###

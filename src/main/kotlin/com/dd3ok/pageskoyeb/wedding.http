@@ -1,0 +1,86 @@
+### Wedding Comment API 테스트
+
+### 1. 방명록 작성 - POST
+POST http://localhost:8080/api/wedding/comments
+Content-Type: application/json
+
+{
+  "author": "홍길동",
+  "password": "1234",
+  "message": "축하합니다! 행복한 결혼 생활 되세요 ❤️"
+}
+
+### 2. 방명록 목록 조회 - GET (페이징)
+GET http://localhost:8080/api/wedding/comments
+Accept: application/json
+
+### 3. 방명록 목록 조회 - GET (페이징 파라미터)
+GET http://localhost:8080/api/wedding/comments?page=0&size=5
+Accept: application/json
+
+### 4. 방명록 단건 조회 - GET
+GET http://localhost:8080/api/wedding/comments/1
+Accept: application/json
+
+### 5. 방명록 수정 - PUT
+PUT http://localhost:8080/api/wedding/comments/1
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "message": "수정된 축하 메시지입니다! 정말 축하드려요 🎉"
+}
+
+### 6. 방명록 삭제 - DELETE
+DELETE http://localhost:8080/api/wedding/comments/1
+Content-Type: application/json
+
+{
+  "password": "1234"
+}
+
+### 7. 여러 방명록 작성 (테스트 데이터)
+POST http://localhost:8080/api/wedding/comments
+Content-Type: application/json
+
+{
+  "author": "김철수",
+  "password": "1111",
+  "message": "정말 축하드립니다! 오래오래 행복하세요!"
+}
+
+###
+POST http://localhost:8080/api/wedding/comments
+Content-Type: application/json
+
+{
+  "author": "박영희",
+  "password": "2222",
+  "message": "아름다운 결혼식이었어요. 축하해요~"
+}
+
+###
+POST http://localhost:8080/api/wedding/comments
+Content-Type: application/json
+
+{
+  "author": "이민수",
+  "password": "3333",
+  "message": "신랑 신부 모두 축하드려요! 🥳"
+}
+
+### 8. 잘못된 비밀번호로 수정 시도 (에러 테스트)
+PUT http://localhost:8080/api/wedding/comments/2
+Content-Type: application/json
+
+{
+  "password": "wrong_password",
+  "message": "수정 시도"
+}
+
+### 9. 존재하지 않는 ID 조회 (에러 테스트)
+GET http://localhost:8080/api/wedding/comments/999
+Accept: application/json
+
+###
+
