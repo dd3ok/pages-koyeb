@@ -18,7 +18,3 @@ jobs:
                -H "User-Agent: GitHub-Actions-Health-Check" \
                -w "HTTP Status: %{http_code}\nResponse Time: %{time_total}s\n" \
                -s -S
-
-      - name: Log API Call
-        run: |
-          echo "API 호출 완료: $(date)"
