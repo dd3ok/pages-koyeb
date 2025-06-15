@@ -7,7 +7,7 @@ import com.dd3ok.pageskoyeb.domain.wedding.vo.CommentPassword
 import java.time.LocalDateTime
 
 data class WeddingComment private constructor(
-    val id: Long? = null,
+    val id: String? = null,
     val author: CommentAuthor,
     private val hashedPassword: String,
     val message: CommentMessage,
@@ -46,7 +46,7 @@ data class WeddingComment private constructor(
         }
         
         fun fromRepository(
-            id: Long,
+            id: String? = null,
             author: CommentAuthor,
             hashedPassword: String,
             message: CommentMessage,

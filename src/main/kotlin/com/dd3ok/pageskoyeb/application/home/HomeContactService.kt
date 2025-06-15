@@ -40,7 +40,7 @@ class HomeContactService(
     }
     
     @Transactional(readOnly = true)
-    fun getContact(id: Long): ContactResponse {
+    fun getContact(id: String): ContactResponse {
         val contact = repository.findById(id)
             ?: throw IllegalArgumentException("문의를 찾을 수 없습니다. ID: $id")
         return ContactResponse.from(contact)
@@ -52,7 +52,7 @@ class HomeContactService(
             .map { ContactResponse.from(it) }
     }
     
-    fun deleteContact(id: Long) {
+    fun deleteContact(id: String) {
         if (!repository.existsById(id)) {
             throw IllegalArgumentException("문의를 찾을 수 없습니다. ID: $id")
         }

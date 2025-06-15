@@ -10,7 +10,7 @@ data class CreateContactRequest(
 )
 
 data class ContactResponse(
-    val id: Long,
+    val id: String,
     val name: String,
     val email: String,
     val message: String,
@@ -21,7 +21,7 @@ data class ContactResponse(
         fun from(contact: HomeContact): ContactResponse {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             return ContactResponse(
-                id = contact.id ?: 0,
+                id = contact.id ?: "",
                 name = contact.name.getValue(),
                 email = contact.email.getValue(),
                 message = contact.message.getValue(),

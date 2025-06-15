@@ -7,7 +7,7 @@ import com.dd3ok.pageskoyeb.domain.home.vo.ContactName
 import java.time.LocalDateTime
 
 data class HomeContact private constructor(
-    val id: Long? = null,
+    val id: String? = null,
     val name: ContactName,
     val email: ContactEmail,
     val message: ContactMessage,
@@ -32,7 +32,7 @@ data class HomeContact private constructor(
         }
         
         fun fromRepository(
-            id: Long,
+            id: String? = null,
             name: ContactName,
             email: ContactEmail,
             message: ContactMessage,

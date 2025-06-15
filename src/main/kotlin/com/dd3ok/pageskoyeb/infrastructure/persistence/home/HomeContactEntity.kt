@@ -1,36 +1,36 @@
 package com.dd3ok.pageskoyeb.infrastructure.persistence.home
 
-import jakarta.persistence.*
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.Field
 import java.time.LocalDateTime
 
-@Entity
-@Table(name = "home_contact")
+@Document(collection = "home_contacts")
 data class HomeContactEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
-    
-    @Column(nullable = false, length = 100)
+    val id: String? = null,
+
+    @Field("name")
     val name: String,
-    
-    @Column(nullable = false)
+
+    @Field("email")
     val email: String,
-    
-    @Column(nullable = false, columnDefinition = "TEXT")
+
+    @Field("message")
     val message: String,
-    
-    @Column(name = "ip_address", length = 45)
+
+    @Field("ip_address")
     val ipAddress: String? = null,
-    
-    @CreationTimestamp
-    @Column(name = "created_at")
+
+    @CreatedDate
+    @Field("created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    
-    @UpdateTimestamp
-    @Column(name = "updated_at")
+
+    @LastModifiedDate
+    @Field("updated_at")
     val updatedAt: LocalDateTime = LocalDateTime.now()
 ) {
-    constructor() : this(0, "", "", "", null)
+    constructor() : this(null, "", "", "", null)
 }

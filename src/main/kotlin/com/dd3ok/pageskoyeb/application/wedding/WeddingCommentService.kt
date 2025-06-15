@@ -45,13 +45,13 @@ class WeddingCommentService(
     }
     
     @Transactional(readOnly = true)
-    fun getComment(id: Long): CommentResponse {
+    fun getComment(id: String): CommentResponse {
         val comment = repository.findById(id)
             ?: throw IllegalArgumentException("방명록을 찾을 수 없습니다. ID: $id")
         return CommentResponse.from(comment)
     }
     
-    fun updateComment(id: Long, request: UpdateCommentRequest): CommentResponse {
+    fun updateComment(id: String, request: UpdateCommentRequest): CommentResponse {
         val comment = repository.findById(id)
             ?: throw IllegalArgumentException("방명록을 찾을 수 없습니다. ID: $id")
         
@@ -67,7 +67,7 @@ class WeddingCommentService(
         return CommentResponse.from(savedComment)
     }
     
-    fun deleteComment(id: Long, request: DeleteCommentRequest) {
+    fun deleteComment(id: String, request: DeleteCommentRequest) {
         val comment = repository.findById(id)
             ?: throw IllegalArgumentException("방명록을 찾을 수 없습니다. ID: $id")
         

@@ -11,37 +11,37 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class WeddingCommentRepositoryImpl(
-    private val jpaRepository: WeddingCommentJpaRepository
+    private val mongoRepository: WeddingCommentMongoRepository
 ) : WeddingCommentRepository {
-    
+
     override fun save(comment: WeddingComment): WeddingComment {
         val entity = comment.toEntity()
-        val savedEntity = jpaRepository.save(entity)
+        val savedEntity = mongoRepository.save(entity)
         return savedEntity.toDomain()
     }
-    
-    override fun findById(id: Long): WeddingComment? {
-        return jpaRepository.findById(id)
+
+    override fun findById(id: String): WeddingComment? {
+        return mongoRepository.findById(id)
             .map { it.toDomain() }
             .orElse(null)
     }
-    
+
     override fun findAll(pageable: Pageable): Page<WeddingComment> {
-        return jpaRepository.findAllByOrderByCreatedAtDesc(pageable)
+        return mongoRepository.findAllByOrderByCreatedAtDesc(pageable)
             .map { it.toDomain() }
     }
-    
-    override fun deleteById(id: Long) {
-        jpaRepository.deleteById(id)
+
+    override fun deleteById(id: String) {
+        mongoRepository.deleteById(id)
     }
-    
-    override fun existsById(id: Long): Boolean {
-        return jpaRepository.existsById(id)
+
+    override fun existsById(id: String): Boolean {
+        return mongoRepository.existsById(id)
     }
-    
+
     private fun WeddingComment.toEntity(): WeddingCommentEntity {
         return WeddingCommentEntity(
-            id = this.id ?: 0,
+            id = this.id,
             name = this.author.getValue(),
             password = this.getHashedPassword(),
             message = this.message.getValue(),
@@ -50,7 +50,7 @@ class WeddingCommentRepositoryImpl(
             updatedAt = this.updatedAt
         )
     }
-    
+
     private fun WeddingCommentEntity.toDomain(): WeddingComment {
         return WeddingComment.fromRepository(
             id = this.id,

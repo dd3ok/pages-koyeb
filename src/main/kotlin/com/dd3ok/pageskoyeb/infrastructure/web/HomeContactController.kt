@@ -35,13 +35,13 @@ class HomeContactController(
     }
     
     @GetMapping("/{id}")
-    fun getContact(@PathVariable id: Long): ResponseEntity<ContactResponse> {
+    fun getContact(@PathVariable id: String): ResponseEntity<ContactResponse> {
         val response = homeContactService.getContact(id)
         return ResponseEntity.ok(response)
     }
     
     @DeleteMapping("/{id}")
-    fun deleteContact(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteContact(@PathVariable id: String): ResponseEntity<Void> {
         homeContactService.deleteContact(id)
         return ResponseEntity.noContent().build()
     }

@@ -19,7 +19,7 @@ data class DeleteCommentRequest(
 )
 
 data class CommentResponse(
-    val id: Long,
+    val id: String,
     val author: String,
     val message: String,
     val createdAt: String,
@@ -29,7 +29,7 @@ data class CommentResponse(
         fun from(comment: WeddingComment): CommentResponse {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             return CommentResponse(
-                id = comment.id ?: 0,
+                id = comment.id ?: "",
                 author = comment.author.getValue(),
                 message = comment.message.getValue(),
                 createdAt = comment.createdAt.format(formatter),

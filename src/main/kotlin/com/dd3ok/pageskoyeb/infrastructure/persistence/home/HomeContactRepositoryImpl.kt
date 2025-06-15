@@ -12,42 +12,42 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class HomeContactRepositoryImpl(
-    private val jpaRepository: HomeContactJpaRepository
+    private val mongoRepository: HomeContactMongoRepository
 ) : HomeContactRepository {
-    
+
     override fun save(contact: HomeContact): HomeContact {
         val entity = contact.toEntity()
-        val savedEntity = jpaRepository.save(entity)
+        val savedEntity = mongoRepository.save(entity)
         return savedEntity.toDomain()
     }
-    
-    override fun findById(id: Long): HomeContact? {
-        return jpaRepository.findById(id)
+
+    override fun findById(id: String): HomeContact? {
+        return mongoRepository.findById(id)
             .map { it.toDomain() }
             .orElse(null)
     }
-    
+
     override fun findAll(pageable: Pageable): Page<HomeContact> {
-        return jpaRepository.findAllByOrderByCreatedAtDesc(pageable)
-            .map { it.toDomain() }
+        val entities = mongoRepository.findAllByOrderByCreatedAtDesc(pageable)
+        return entities.map { it.toDomain() }
     }
-    
+
     override fun findByEmail(email: String): List<HomeContact> {
-        return jpaRepository.findByEmail(email)
+        return mongoRepository.findByEmail(email)
             .map { it.toDomain() }
     }
-    
-    override fun deleteById(id: Long) {
-        jpaRepository.deleteById(id)
+
+    override fun deleteById(id: String) {
+        mongoRepository.deleteById(id)
     }
-    
-    override fun existsById(id: Long): Boolean {
-        return jpaRepository.existsById(id)
+
+    override fun existsById(id: String): Boolean {
+        return mongoRepository.existsById(id)
     }
-    
+
     private fun HomeContact.toEntity(): HomeContactEntity {
         return HomeContactEntity(
-            id = this.id ?: 0,
+            id = this.id,
             name = this.name.getValue(),
             email = this.email.getValue(),
             message = this.message.getValue(),
@@ -56,7 +56,7 @@ class HomeContactRepositoryImpl(
             updatedAt = this.updatedAt
         )
     }
-    
+
     private fun HomeContactEntity.toDomain(): HomeContact {
         return HomeContact.fromRepository(
             id = this.id,

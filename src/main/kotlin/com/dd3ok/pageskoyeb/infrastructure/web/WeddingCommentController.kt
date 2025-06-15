@@ -37,14 +37,14 @@ class WeddingCommentController(
     }
     
     @GetMapping("/{id}")
-    fun getComment(@PathVariable id: Long): ResponseEntity<CommentResponse> {
+    fun getComment(@PathVariable id: String): ResponseEntity<CommentResponse> {
         val response = weddingCommentService.getComment(id)
         return ResponseEntity.ok(response)
     }
     
     @PutMapping("/{id}")
     fun updateComment(
-        @PathVariable id: Long,
+        @PathVariable id: String,
         @RequestBody request: UpdateCommentRequest
     ): ResponseEntity<CommentResponse> {
         val response = weddingCommentService.updateComment(id, request)
@@ -53,7 +53,7 @@ class WeddingCommentController(
     
     @DeleteMapping("/{id}")
     fun deleteComment(
-        @PathVariable id: Long,
+        @PathVariable id: String,
         @RequestBody request: DeleteCommentRequest
     ): ResponseEntity<Void> {
         weddingCommentService.deleteComment(id, request)

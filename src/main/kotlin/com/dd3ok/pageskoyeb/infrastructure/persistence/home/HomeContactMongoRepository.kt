@@ -2,9 +2,9 @@ package com.dd3ok.pageskoyeb.infrastructure.persistence.home
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 
-interface HomeContactJpaRepository : JpaRepository<HomeContactEntity, Long> {
+interface HomeContactMongoRepository : MongoRepository<HomeContactEntity, String> {
     fun findAllByOrderByCreatedAtDesc(pageable: Pageable): Page<HomeContactEntity>
     fun findByEmail(email: String): List<HomeContactEntity>
 }
