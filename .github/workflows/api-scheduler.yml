@@ -1,0 +1,24 @@
+name: API Health Check Scheduler
+
+on:
+  schedule:
+    # 50분마다 실행 (0,50분에 실행)
+    - cron: '*/55 * * * *'
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call Health Check API
+        run: |
+          curl -X GET "${{ secrets.HEALTH_API }}" \
+               -H "Accept: application/json" \
+               -H "User-Agent: GitHub-Actions-Health-Check" \
+               -w "HTTP Status: %{http_code}\nResponse Time: %{time_total}s\n" \
+               -s -S
+
+      - name: Log API Call
+        run: |
+          echo "API 호출 완료: $(date)"
