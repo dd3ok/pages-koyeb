@@ -3,7 +3,7 @@ name: API Health Check Scheduler
 on:
   schedule:
     # 50분마다 실행 (0,50분에 실행)
-    - cron: '*/55 * * * *'
+    - cron: '0,20,40 * * * *'
   workflow_dispatch: # 수동 실행 가능
 
 jobs:
