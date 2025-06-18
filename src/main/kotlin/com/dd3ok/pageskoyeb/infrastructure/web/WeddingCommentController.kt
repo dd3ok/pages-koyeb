@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/wedding/comments")
-@CrossOrigin(origins = ["*"])
 class WeddingCommentController(
     private val weddingCommentService: WeddingCommentService
 ) {
