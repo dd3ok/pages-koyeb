@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.infrastructure.persistence.home
+package com.dd3ok.pageskoyeb.repository.home
 
 import com.dd3ok.pageskoyeb.domain.common.IpAddress
 import com.dd3ok.pageskoyeb.domain.home.HomeContact

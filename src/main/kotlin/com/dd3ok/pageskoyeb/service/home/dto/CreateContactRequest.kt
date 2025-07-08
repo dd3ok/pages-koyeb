@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.application.home.dto
+package com.dd3ok.pageskoyeb.service.home.dto
 
 import com.dd3ok.pageskoyeb.domain.home.HomeContact
 import java.time.format.DateTimeFormatter

@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.infrastructure.persistence.wedding
+package com.dd3ok.pageskoyeb.repository.wedding
 
 import com.dd3ok.pageskoyeb.domain.common.IpAddress
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingComment

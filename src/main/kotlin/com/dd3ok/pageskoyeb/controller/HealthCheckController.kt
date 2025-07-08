@@ -1,7 +1,7 @@
-package com.dd3ok.pageskoyeb.infrastructure.web
+package com.dd3ok.pageskoyeb.controller
 
-import com.dd3ok.pageskoyeb.application.home.HomeContactService
-import com.dd3ok.pageskoyeb.application.home.dto.ContactResponse
+import com.dd3ok.pageskoyeb.service.home.HomeContactService
+import com.dd3ok.pageskoyeb.service.home.dto.ContactResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

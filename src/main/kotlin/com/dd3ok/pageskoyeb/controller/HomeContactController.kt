@@ -1,8 +1,8 @@
-package com.dd3ok.pageskoyeb.infrastructure.web
+package com.dd3ok.pageskoyeb.controller
 
-import com.dd3ok.pageskoyeb.application.home.HomeContactService
-import com.dd3ok.pageskoyeb.application.home.dto.ContactResponse
-import com.dd3ok.pageskoyeb.application.home.dto.CreateContactRequest
+import com.dd3ok.pageskoyeb.service.home.HomeContactService
+import com.dd3ok.pageskoyeb.service.home.dto.ContactResponse
+import com.dd3ok.pageskoyeb.service.home.dto.CreateContactRequest
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity

@@ -1,7 +1,7 @@
-package com.dd3ok.pageskoyeb.application.home
+package com.dd3ok.pageskoyeb.service.home
 
-import com.dd3ok.pageskoyeb.application.home.dto.ContactResponse
-import com.dd3ok.pageskoyeb.application.home.dto.CreateContactRequest
+import com.dd3ok.pageskoyeb.service.home.dto.ContactResponse
+import com.dd3ok.pageskoyeb.service.home.dto.CreateContactRequest
 import com.dd3ok.pageskoyeb.domain.common.IpAddress
 import com.dd3ok.pageskoyeb.domain.home.HomeContact
 import com.dd3ok.pageskoyeb.domain.home.HomeContactRepository

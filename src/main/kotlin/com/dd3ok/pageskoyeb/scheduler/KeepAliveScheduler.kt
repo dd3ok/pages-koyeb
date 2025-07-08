@@ -1,4 +1,4 @@
-//package com.dd3ok.pageskoyeb.infrastructure.scheduler
+//package com.dd3ok.pageskoyeb.scheduler
 //
 //import com.dd3ok.pageskoyeb.application.home.HomeContactService
 //import org.slf4j.LoggerFactory

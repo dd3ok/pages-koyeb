@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.infrastructure.config
+package com.dd3ok.pageskoyeb.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

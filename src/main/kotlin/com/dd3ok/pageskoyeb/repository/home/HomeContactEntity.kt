@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.infrastructure.persistence.wedding
+package com.dd3ok.pageskoyeb.repository.home
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.CreatedDate
@@ -7,16 +7,16 @@ import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 import java.time.LocalDateTime
 
-@Document(collection = "wedding_comments")
-data class WeddingCommentEntity(
+@Document(collection = "home_contacts")
+data class HomeContactEntity(
     @Id
     val id: String? = null,
 
     @Field("name")
     val name: String,
 
-    @Field("password")
-    val password: String,
+    @Field("email")
+    val email: String,
 
     @Field("message")
     val message: String,

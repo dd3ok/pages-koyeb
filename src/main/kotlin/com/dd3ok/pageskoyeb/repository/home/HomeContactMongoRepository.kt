@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.infrastructure.persistence.home
+package com.dd3ok.pageskoyeb.repository.home
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

@@ -1,10 +1,10 @@
-package com.dd3ok.pageskoyeb.infrastructure.web
+package com.dd3ok.pageskoyeb.controller
 
-import com.dd3ok.pageskoyeb.application.wedding.WeddingCommentService
-import com.dd3ok.pageskoyeb.application.wedding.dto.CommentResponse
-import com.dd3ok.pageskoyeb.application.wedding.dto.CreateCommentRequest
-import com.dd3ok.pageskoyeb.application.wedding.dto.DeleteCommentRequest
-import com.dd3ok.pageskoyeb.application.wedding.dto.UpdateCommentRequest
+import com.dd3ok.pageskoyeb.service.wedding.WeddingCommentService
+import com.dd3ok.pageskoyeb.service.wedding.dto.CommentResponse
+import com.dd3ok.pageskoyeb.service.wedding.dto.CreateCommentRequest
+import com.dd3ok.pageskoyeb.service.wedding.dto.DeleteCommentRequest
+import com.dd3ok.pageskoyeb.service.wedding.dto.UpdateCommentRequest
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity

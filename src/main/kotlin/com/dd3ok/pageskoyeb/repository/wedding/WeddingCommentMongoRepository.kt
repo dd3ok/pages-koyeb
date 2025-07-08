@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.infrastructure.persistence.wedding
+package com.dd3ok.pageskoyeb.repository.wedding
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

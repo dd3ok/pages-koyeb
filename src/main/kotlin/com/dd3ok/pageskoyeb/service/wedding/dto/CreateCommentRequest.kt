@@ -1,4 +1,4 @@
-package com.dd3ok.pageskoyeb.application.wedding.dto
+package com.dd3ok.pageskoyeb.service.wedding.dto
 
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingComment
 import java.time.format.DateTimeFormatter

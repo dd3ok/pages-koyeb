@@ -1,9 +1,9 @@
-package com.dd3ok.pageskoyeb.application.wedding
+package com.dd3ok.pageskoyeb.service.wedding
 
-import com.dd3ok.pageskoyeb.application.wedding.dto.CommentResponse
-import com.dd3ok.pageskoyeb.application.wedding.dto.CreateCommentRequest
-import com.dd3ok.pageskoyeb.application.wedding.dto.DeleteCommentRequest
-import com.dd3ok.pageskoyeb.application.wedding.dto.UpdateCommentRequest
+import com.dd3ok.pageskoyeb.service.wedding.dto.CommentResponse
+import com.dd3ok.pageskoyeb.service.wedding.dto.CreateCommentRequest
+import com.dd3ok.pageskoyeb.service.wedding.dto.DeleteCommentRequest
+import com.dd3ok.pageskoyeb.service.wedding.dto.UpdateCommentRequest
 import com.dd3ok.pageskoyeb.domain.common.IpAddress
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingComment
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingCommentRepository
