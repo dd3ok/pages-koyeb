@@ -29,6 +29,7 @@ class SecurityConfig {
                 auth
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS 요청 허용
                     .requestMatchers("/api/healthcheck").permitAll()
+                    .requestMatchers("/api/home/contacts").permitAll()
                     .anyRequest().authenticated()
             }
             .build()
