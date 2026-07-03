@@ -8,26 +8,32 @@ import com.dd3ok.pageskoyeb.service.home.ContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.NoopContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.SmtpContactMailNotifier;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+@ExtendWith(OutputCaptureExtension.class)
 class ContactMailConfigTest {
 
     private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
         .withUserConfiguration(ContactMailConfig.class);
 
     @Test
-    void usesNoopNotifierWithoutSmtpHost() {
+    void usesNoopNotifierWithoutSmtpHost(CapturedOutput output) {
         contextRunner.run(context -> {
             assertThat(context).hasSingleBean(ContactMailNotifier.class);
             assertThat(context.getBean(ContactMailNotifier.class)).isInstanceOf(NoopContactMailNotifier.class);
             assertThat(context).doesNotHaveBean("contactMailTaskExecutor");
         });
+
+        assertThat(output).contains("Contact email notification disabled");
     }
 
     @Test
-    void usesBoundedSmtpNotifierWhenSmtpHostExists() {
+    void usesBoundedSmtpNotifierWhenSmtpHostExists(CapturedOutput output) {
         contextRunner
             .withBean(JavaMailSender.class, () -> mock(JavaMailSender.class))
             .withPropertyValues("spring.mail.host=smtp.example.com")
@@ -42,6 +48,8 @@ class ContactMailConfigTest {
                 assertThat(executor.getCorePoolSize()).isEqualTo(1);
                 assertThat(executor.getMaxPoolSize()).isEqualTo(1);
             });
+
+        assertThat(output).contains("Contact email notification enabled");
     }
 
     @Test

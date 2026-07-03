@@ -6,11 +6,15 @@ import com.dd3ok.pageskoyeb.domain.home.HomeContact;
 import com.dd3ok.pageskoyeb.domain.home.HomeContactRepository;
 import com.dd3ok.pageskoyeb.service.home.ContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.HomeContactService;
+import com.dd3ok.pageskoyeb.service.home.NoopContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.SmtpContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.dto.ContactResponse;
 import com.dd3ok.pageskoyeb.service.home.dto.CreateContactRequest;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.core.task.SyncTaskExecutor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+@ExtendWith(OutputCaptureExtension.class)
 class ContactMailNotificationTest {
 
     @Test
@@ -81,6 +86,53 @@ class ContactMailNotificationTest {
             .contains("Name: Kim")
             .contains("Email: kim@example.com")
             .contains("Message:\nNeed help");
+    }
+
+    @Test
+    void smtpNotifierLogsScheduleAndSuccessWithoutMessageBody(CapturedOutput output) {
+        CapturingMailSender mailSender = new CapturingMailSender();
+        SmtpContactMailNotifier notifier = new SmtpContactMailNotifier(
+            mailSender,
+            new SyncTaskExecutor(),
+            "hwick@kakao.com",
+            "no-reply@example.com",
+            ""
+        );
+
+        notifier.notify(new ContactResponse(
+            "contact-1",
+            "Kim",
+            "kim@example.com",
+            "Secret message body",
+            "2026-07-03 12:00:00",
+            "2026-07-03 12:00:00"
+        ));
+
+        assertThat(output)
+            .contains("Contact notification email scheduled for contact id contact-1")
+            .contains("Contact notification email sent for contact id contact-1")
+            .doesNotContain("Secret message body")
+            .doesNotContain("kim@example.com");
+    }
+
+    @Test
+    void noopNotifierLogsSkippedNotification(CapturedOutput output) {
+        ContactMailNotifier notifier = new NoopContactMailNotifier("spring.mail.host is not configured");
+
+        notifier.notify(new ContactResponse(
+            "contact-1",
+            "Kim",
+            "kim@example.com",
+            "Secret message body",
+            "2026-07-03 12:00:00",
+            "2026-07-03 12:00:00"
+        ));
+
+        assertThat(output)
+            .contains("Contact notification email skipped for contact id contact-1")
+            .contains("spring.mail.host is not configured")
+            .doesNotContain("Secret message body")
+            .doesNotContain("kim@example.com");
     }
 
     private static class CapturingContactMailNotifier implements ContactMailNotifier {

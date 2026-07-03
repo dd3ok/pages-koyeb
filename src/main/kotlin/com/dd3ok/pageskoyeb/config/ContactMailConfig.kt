@@ -11,8 +11,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.task.TaskExecutor
+import org.springframework.core.env.Environment
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import org.slf4j.LoggerFactory
 
 @Configuration
 class ContactMailConfig {
@@ -43,10 +45,23 @@ class ContactMailConfig {
         @Value("\${contact.mail.from:}") from: String,
         @Value("\${spring.mail.username:}") username: String
     ): ContactMailNotifier {
+        logger.info("Contact email notification enabled")
         return SmtpContactMailNotifier(mailSender, taskExecutor, to, from, username)
     }
 
     @Bean
     @ConditionalOnMissingBean(ContactMailNotifier::class)
-    fun noopContactMailNotifier(): ContactMailNotifier = NoopContactMailNotifier()
+    fun noopContactMailNotifier(environment: Environment): ContactMailNotifier {
+        val reason = when {
+            environment.getProperty("contact.mail.enabled") == "false" -> "contact.mail.enabled=false"
+            environment.getProperty("spring.mail.host").isNullOrBlank() -> "spring.mail.host is not configured"
+            else -> "JavaMailSender is not configured"
+        }
+        logger.info("Contact email notification disabled: {}", reason)
+        return NoopContactMailNotifier(reason)
+    }
+
+    private companion object {
+        private val logger = LoggerFactory.getLogger(ContactMailConfig::class.java)
+    }
 }

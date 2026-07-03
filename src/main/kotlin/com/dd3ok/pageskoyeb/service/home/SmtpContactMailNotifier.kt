@@ -16,6 +16,7 @@ class SmtpContactMailNotifier(
 
     override fun notify(contact: ContactResponse) {
         try {
+            logger.info("Contact notification email scheduled for contact id {}", contact.id.ifBlank { "unknown" })
             taskExecutor.execute { send(contact) }
         } catch (ex: RuntimeException) {
             logger.warn("Failed to schedule contact notification email for contact id {}", contact.id, ex)
@@ -40,6 +41,7 @@ class SmtpContactMailNotifier(
             """.trimIndent()
 
             mailSender.send(message)
+            logger.info("Contact notification email sent for contact id {}", contact.id.ifBlank { "unknown" })
         } catch (ex: RuntimeException) {
             logger.warn("Failed to send contact notification email for contact id {}", contact.id, ex)
         }
