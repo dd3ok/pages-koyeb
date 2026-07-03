@@ -36,7 +36,10 @@ class WeddingCommentService(
     }
     
     fun getComments(page: Int = 0, size: Int = 10): Page<CommentResponse> {
-        val pageable: Pageable = PageRequest.of(page, size)
+        val pageable: Pageable = PageRequest.of(
+            page.coerceAtLeast(0),
+            size.coerceIn(1, MAX_PAGE_SIZE)
+        )
         return repository.findAll(pageable)
             .map { CommentResponse.from(it) }
     }
@@ -75,5 +78,9 @@ class WeddingCommentService(
         }
         
         repository.deleteById(id)
+    }
+
+    private companion object {
+        const val MAX_PAGE_SIZE = 50
     }
 }

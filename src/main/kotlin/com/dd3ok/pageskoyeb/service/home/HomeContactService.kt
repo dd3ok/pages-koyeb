@@ -31,7 +31,10 @@ class HomeContactService(
     }
     
     fun getContacts(page: Int = 0, size: Int = 10): Page<ContactResponse> {
-        val pageable: Pageable = PageRequest.of(page, size)
+        val pageable: Pageable = PageRequest.of(
+            page.coerceAtLeast(0),
+            size.coerceIn(1, MAX_PAGE_SIZE)
+        )
         return repository.findAll(pageable)
             .map { ContactResponse.from(it) }
     }
@@ -52,5 +55,9 @@ class HomeContactService(
             throw IllegalArgumentException("문의를 찾을 수 없습니다. ID: $id")
         }
         repository.deleteById(id)
+    }
+
+    private companion object {
+        const val MAX_PAGE_SIZE = 50
     }
 }
