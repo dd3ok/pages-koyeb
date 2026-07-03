@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class HomeContactService(
-    private val repository: HomeContactRepository
+    private val repository: HomeContactRepository,
+    private val contactMailNotifier: ContactMailNotifier
 ) {
     
     fun createContact(request: CreateContactRequest, ipAddress: String?): ContactResponse {
@@ -26,8 +27,13 @@ class HomeContactService(
             ipAddress = IpAddress(ipAddress)
         )
         
-        val savedContact = repository.save(contact)
-        return ContactResponse.from(savedContact)
+        val response = ContactResponse.from(repository.save(contact))
+        try {
+            contactMailNotifier.notify(response)
+        } catch (_: RuntimeException) {
+            // Contact persistence must not depend on notification delivery.
+        }
+        return response
     }
     
     fun getContacts(page: Int = 0, size: Int = 10): Page<ContactResponse> {

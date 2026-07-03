@@ -7,6 +7,7 @@ import com.dd3ok.pageskoyeb.domain.home.HomeContactRepository;
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingComment;
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingCommentRepository;
 import com.dd3ok.pageskoyeb.service.home.HomeContactService;
+import com.dd3ok.pageskoyeb.service.home.NoopContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.wedding.WeddingCommentService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class PaginationLimitTest {
     @Test
     void homeContactListCapsLargePageSize() {
         CapturingHomeRepository repository = new CapturingHomeRepository();
-        HomeContactService service = new HomeContactService(repository);
+        HomeContactService service = new HomeContactService(repository, new NoopContactMailNotifier());
 
         service.getContacts(0, 500);
 
@@ -31,7 +32,7 @@ class PaginationLimitTest {
     @Test
     void homeContactListNormalizesInvalidPageRequest() {
         CapturingHomeRepository repository = new CapturingHomeRepository();
-        HomeContactService service = new HomeContactService(repository);
+        HomeContactService service = new HomeContactService(repository, new NoopContactMailNotifier());
 
         service.getContacts(-2, 0);
 

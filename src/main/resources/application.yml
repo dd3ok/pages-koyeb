@@ -1,10 +1,28 @@
 server:
   port: ${PORT:8080}
 
+contact:
+  mail:
+    enabled: ${CONTACT_MAIL_ENABLED:true}
+    to: ${CONTACT_MAIL_TO:hwick@kakao.com}
+    from: ${CONTACT_MAIL_FROM:}
+
 spring:
   data:
     mongodb:
       uri: ${MONGO_URI}
+
+  mail:
+    port: ${SPRING_MAIL_PORT:587}
+    properties:
+      mail:
+        smtp:
+          auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:true}
+          starttls:
+            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:true}
+          connectiontimeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT:3000}
+          timeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT:5000}
+          writetimeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_WRITETIMEOUT:5000}
 
   autoconfigure:
     exclude:
