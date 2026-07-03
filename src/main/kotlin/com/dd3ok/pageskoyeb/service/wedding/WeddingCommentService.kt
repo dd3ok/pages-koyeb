@@ -15,10 +15,8 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class WeddingCommentService(
     private val repository: WeddingCommentRepository,
     private val passwordEncoder: BCryptPasswordEncoder
@@ -37,14 +35,12 @@ class WeddingCommentService(
         return CommentResponse.from(savedComment)
     }
     
-    @Transactional(readOnly = true)
     fun getComments(page: Int = 0, size: Int = 10): Page<CommentResponse> {
         val pageable: Pageable = PageRequest.of(page, size)
         return repository.findAll(pageable)
             .map { CommentResponse.from(it) }
     }
     
-    @Transactional(readOnly = true)
     fun getComment(id: String): CommentResponse {
         val comment = repository.findById(id)
             ?: throw IllegalArgumentException("방명록을 찾을 수 없습니다. ID: $id")
