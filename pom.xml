@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dd3ok</groupId>
-    <artifactId>pages-koyeb</artifactId>
+    <artifactId>dd3ok-pages-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pages-koyeb</name>
-    <description>pages-koyeb</description>
+    <name>dd3ok-pages-api</name>
+    <description>dd3ok.github.io에서 사용하는 API 서버</description>
     <url/>
     <licenses>
         <license/>

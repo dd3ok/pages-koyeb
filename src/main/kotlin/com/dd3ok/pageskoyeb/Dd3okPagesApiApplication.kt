@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class PagesKoyebApplication
+class Dd3okPagesApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<PagesKoyebApplication>(*args)
+    runApplication<Dd3okPagesApiApplication>(*args)
 }
