@@ -10,15 +10,11 @@ import com.dd3ok.pageskoyeb.service.home.NoopContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.SmtpContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.dto.ContactResponse;
 import com.dd3ok.pageskoyeb.service.home.dto.CreateContactRequest;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.core.task.SyncTaskExecutor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -195,30 +191,6 @@ class ContactMailNotificationTest {
         public HomeContact save(HomeContact contact) {
             this.saved = contact;
             return this.saved;
-        }
-
-        @Override
-        public HomeContact findById(String id) {
-            return null;
-        }
-
-        @Override
-        public Page<HomeContact> findAll(Pageable pageable) {
-            return new PageImpl<>(List.of(), pageable, 0);
-        }
-
-        @Override
-        public List<HomeContact> findByEmail(String email) {
-            return List.of();
-        }
-
-        @Override
-        public void deleteById(String id) {
-        }
-
-        @Override
-        public boolean existsById(String id) {
-            return false;
         }
     }
 }

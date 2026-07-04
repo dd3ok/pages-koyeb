@@ -6,11 +6,13 @@ import com.dd3ok.pageskoyeb.service.wedding.dto.CreateCommentRequest
 import com.dd3ok.pageskoyeb.service.wedding.dto.DeleteCommentRequest
 import com.dd3ok.pageskoyeb.service.wedding.dto.UpdateCommentRequest
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@ConditionalOnProperty(prefix = "wedding.api", name = ["enabled"], havingValue = "true")
 @RequestMapping("/api/wedding/comments")
 class WeddingCommentController(
     private val weddingCommentService: WeddingCommentService

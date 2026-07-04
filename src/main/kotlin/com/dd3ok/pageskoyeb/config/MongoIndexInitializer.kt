@@ -1,6 +1,5 @@
 package com.dd3ok.pageskoyeb.config
 
-import com.dd3ok.pageskoyeb.repository.home.HomeContactEntity
 import com.dd3ok.pageskoyeb.repository.wedding.WeddingCommentEntity
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationReadyEvent
@@ -29,12 +28,14 @@ class MongoIndexInitializer(
 
     fun ensureIndexes() {
         try {
-            mongoTemplate.indexOps(HomeContactEntity::class.java)
-                .createIndex(Index().on("created_at", Sort.Direction.DESC))
-            mongoTemplate.indexOps(HomeContactEntity::class.java)
-                .createIndex(Index().on("email", Sort.Direction.ASC))
             mongoTemplate.indexOps(WeddingCommentEntity::class.java)
-                .createIndex(Index().on("created_at", Sort.Direction.DESC))
+                .createIndex(
+                    Index()
+                        .on("created_at", Sort.Direction.DESC)
+                        .on("_id", Sort.Direction.DESC)
+                        .named("wedding_comments_created_at_id_desc")
+                        .background()
+                )
         } catch (exception: Exception) {
             logger.warn("Mongo index creation skipped: {}", exception.message)
         }

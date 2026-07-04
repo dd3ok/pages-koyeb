@@ -5,5 +5,5 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface WeddingCommentMongoRepository : MongoRepository<WeddingCommentEntity, String> {
-    fun findAllByOrderByCreatedAtDesc(pageable: Pageable): Page<WeddingCommentEntity>
+    fun findAllByOrderByCreatedAtDescIdDesc(pageable: Pageable): Page<WeddingCommentEntity>
 }

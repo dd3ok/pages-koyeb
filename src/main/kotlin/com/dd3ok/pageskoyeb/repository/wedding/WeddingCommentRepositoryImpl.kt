@@ -27,7 +27,7 @@ class WeddingCommentRepositoryImpl(
     }
 
     override fun findAll(pageable: Pageable): Page<WeddingComment> {
-        return mongoRepository.findAllByOrderByCreatedAtDesc(pageable)
+        return mongoRepository.findAllByOrderByCreatedAtDescIdDesc(pageable)
             .map { it.toDomain() }
     }
 
