@@ -5,8 +5,8 @@ import com.dd3ok.pageskoyeb.domain.wedding.WeddingComment
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingCommentRepository
 import com.dd3ok.pageskoyeb.domain.wedding.vo.CommentAuthor
 import com.dd3ok.pageskoyeb.domain.wedding.vo.CommentMessage
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Slice
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -26,7 +26,7 @@ class WeddingCommentRepositoryImpl(
             .orElse(null)
     }
 
-    override fun findAll(pageable: Pageable): Page<WeddingComment> {
+    override fun findAll(pageable: Pageable): Slice<WeddingComment> {
         return mongoRepository.findAllByOrderByCreatedAtDescIdDesc(pageable)
             .map { it.toDomain() }
     }

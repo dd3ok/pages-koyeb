@@ -7,7 +7,7 @@ import com.dd3ok.pageskoyeb.service.wedding.dto.DeleteCommentRequest
 import com.dd3ok.pageskoyeb.service.wedding.dto.UpdateCommentRequest
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
-import org.springframework.data.domain.Page
+import org.springframework.data.domain.Slice
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -32,7 +32,7 @@ class WeddingCommentController(
     fun getComments(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") size: Int
-    ): ResponseEntity<Page<CommentResponse>> {
+    ): ResponseEntity<Slice<CommentResponse>> {
         val response = weddingCommentService.getComments(page, size)
         return ResponseEntity.ok(response)
     }

@@ -13,7 +13,7 @@ class CorsConfig : WebMvcConfigurer {
                 "http://localhost:3000",
                 "https://dd3ok.github.io"
             )
-            .allowedMethods("GET", "POST", "OPTIONS")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true)
     }

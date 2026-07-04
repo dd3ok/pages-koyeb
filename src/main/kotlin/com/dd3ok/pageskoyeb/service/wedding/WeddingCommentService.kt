@@ -10,9 +10,9 @@ import com.dd3ok.pageskoyeb.domain.wedding.WeddingCommentRepository
 import com.dd3ok.pageskoyeb.domain.wedding.vo.CommentAuthor
 import com.dd3ok.pageskoyeb.domain.wedding.vo.CommentMessage
 import com.dd3ok.pageskoyeb.domain.wedding.vo.CommentPassword
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Slice
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -35,7 +35,7 @@ class WeddingCommentService(
         return CommentResponse.from(savedComment)
     }
     
-    fun getComments(page: Int = 0, size: Int = 10): Page<CommentResponse> {
+    fun getComments(page: Int = 0, size: Int = 10): Slice<CommentResponse> {
         val pageable: Pageable = PageRequest.of(
             page.coerceAtLeast(0),
             size.coerceIn(1, MAX_PAGE_SIZE)

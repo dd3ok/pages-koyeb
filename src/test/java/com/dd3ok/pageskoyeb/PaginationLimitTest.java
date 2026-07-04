@@ -4,12 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingComment;
 import com.dd3ok.pageskoyeb.domain.wedding.WeddingCommentRepository;
+import com.dd3ok.pageskoyeb.service.wedding.dto.CommentResponse;
 import com.dd3ok.pageskoyeb.service.wedding.WeddingCommentService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 class PaginationLimitTest {
@@ -36,8 +37,27 @@ class PaginationLimitTest {
         assertThat(repository.pageable.getPageSize()).isEqualTo(1);
     }
 
+    @Test
+    void weddingCommentListUsesSliceWithoutTotalCountContract() {
+        CapturingWeddingRepository repository = new CapturingWeddingRepository(true);
+        WeddingCommentService service = new WeddingCommentService(repository, new BCryptPasswordEncoder());
+
+        Slice<CommentResponse> response = service.getComments(0, 10);
+
+        assertThat(response.hasNext()).isTrue();
+    }
+
     private static class CapturingWeddingRepository implements WeddingCommentRepository {
         private Pageable pageable;
+        private final boolean hasNext;
+
+        private CapturingWeddingRepository() {
+            this(false);
+        }
+
+        private CapturingWeddingRepository(boolean hasNext) {
+            this.hasNext = hasNext;
+        }
 
         @Override
         public WeddingComment save(WeddingComment comment) {
@@ -50,9 +70,9 @@ class PaginationLimitTest {
         }
 
         @Override
-        public Page<WeddingComment> findAll(Pageable pageable) {
+        public Slice<WeddingComment> findAll(Pageable pageable) {
             this.pageable = pageable;
-            return new PageImpl<>(List.of(), pageable, 0);
+            return new SliceImpl<>(List.of(), pageable, hasNext);
         }
 
         @Override
