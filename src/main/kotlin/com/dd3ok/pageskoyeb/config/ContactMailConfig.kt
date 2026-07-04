@@ -5,7 +5,6 @@ import com.dd3ok.pageskoyeb.service.home.NoopContactMailNotifier
 import com.dd3ok.pageskoyeb.service.home.SmtpContactMailNotifier
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
@@ -35,7 +34,6 @@ class ContactMailConfig {
     }
 
     @Bean
-    @ConditionalOnBean(JavaMailSender::class)
     @ConditionalOnProperty(prefix = "spring.mail", name = ["host"])
     @ConditionalOnProperty(prefix = "contact.mail", name = ["enabled"], havingValue = "true", matchIfMissing = true)
     fun smtpContactMailNotifier(

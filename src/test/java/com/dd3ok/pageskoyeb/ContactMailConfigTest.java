@@ -9,6 +9,8 @@ import com.dd3ok.pageskoyeb.service.home.NoopContactMailNotifier;
 import com.dd3ok.pageskoyeb.service.home.SmtpContactMailNotifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
@@ -47,6 +49,20 @@ class ContactMailConfigTest {
                 );
                 assertThat(executor.getCorePoolSize()).isEqualTo(1);
                 assertThat(executor.getMaxPoolSize()).isEqualTo(1);
+            });
+
+        assertThat(output).contains("Contact email notification enabled");
+    }
+
+    @Test
+    void usesSpringBootMailSenderAutoConfigurationWhenSmtpHostExists(CapturedOutput output) {
+        contextRunner
+            .withConfiguration(AutoConfigurations.of(MailSenderAutoConfiguration.class))
+            .withPropertyValues("spring.mail.host=smtp.example.com")
+            .run(context -> {
+                assertThat(context).hasSingleBean(JavaMailSender.class);
+                assertThat(context).hasSingleBean(ContactMailNotifier.class);
+                assertThat(context.getBean(ContactMailNotifier.class)).isInstanceOf(SmtpContactMailNotifier.class);
             });
 
         assertThat(output).contains("Contact email notification enabled");
